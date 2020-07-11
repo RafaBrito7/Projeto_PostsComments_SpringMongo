@@ -1,8 +1,11 @@
 package com.rafabrito.workshopMongoSpring.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user") // Equivale a entidade do Banco Relacional, para o NoSQL
@@ -13,6 +16,10 @@ public class User implements Serializable{
 	private String id;
 	private String name;
 	private String email;
+	
+	@DBRef(lazy = true) // o layz Vai servir para só carregar os Posts se eles forem explicitamente acessados 
+	// O DBRef vai servir Para referenciar no banco de dados (Cascata ou relacionamento One to Many)
+	private List<Post> posts = new ArrayList<>();
 	
 	public User() {
 	}
@@ -45,6 +52,14 @@ public class User implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
