@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rafabrito.workshopMongoSpring.domain.User;
+import com.rafabrito.workshopMongoSpring.dto.UserDTO;
 import com.rafabrito.workshopMongoSpring.repository.UserRepository;
 import com.rafabrito.workshopMongoSpring.services.exception.ObjectNotFoundException;
 
@@ -23,5 +24,14 @@ public class UserServices{
 	public User findById(String id) {
 		Optional<User> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not Found"));
+	}
+	
+	public User insert(User obj) {
+		return repo.insert(obj);
+	}
+	
+	// Foi implementado na classe Service, por conta de uma possível manipulação no Banco futuramente, a class Service é a unica que mantem uma dpendência com o banco
+	public User fromDTO(UserDTO objDTO) { // Instanciando um User a partir do DTO
+		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
 	}
 }
