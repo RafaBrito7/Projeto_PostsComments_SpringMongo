@@ -2,17 +2,22 @@ package com.rafabrito.workshopMongoSpring.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "user") // Equivale a entidade do Banco Relacional, para o NoSQL
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	private String id;
 	private String name;
-	private Long id;
 	private String email;
 	
 	public User() {
 	}
 
-	public User(String name, Long id, String email) {
+	public User(String name, String id, String email) {
 		this.name = name;
 		this.id = id;
 		this.email = email;
@@ -26,11 +31,11 @@ public class User implements Serializable{
 		this.name = name;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
