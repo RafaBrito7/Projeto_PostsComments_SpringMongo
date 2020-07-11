@@ -30,6 +30,11 @@ public class UserServices{
 		return repo.insert(obj);
 	}
 	
+	public void delete(String id) {
+		findById(id);
+		repo.deleteById(id);
+	}
+	
 	// Foi implementado na classe Service, por conta de uma possível manipulação no Banco futuramente, a class Service é a unica que mantem uma dpendência com o banco
 	public User fromDTO(UserDTO objDTO) { // Instanciando um User a partir do DTO
 		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());

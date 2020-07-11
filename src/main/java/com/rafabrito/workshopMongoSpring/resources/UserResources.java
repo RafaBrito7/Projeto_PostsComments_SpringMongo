@@ -45,4 +45,10 @@ public class UserResources {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri(); // vai capturar o endereço do novo objeto que inseriu através do ID dele
 		return ResponseEntity.created(uri).build(); // o Created retornará o código 201 http para confirmação de execução
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id){ // O Request é para q o endpoint aceite o objDTO
+		service.delete(id);
+		return ResponseEntity.noContent().build(); // o NoContent retornará o código 204 para confirmar que foi deletado daquela requisição (do id)
+	}
 }
