@@ -35,6 +35,17 @@ public class UserServices{
 		repo.deleteById(id);
 	}
 	
+	public User update(User obj) {
+		User newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
+	}
+	
+	private void updateData(User newObj, User obj) {
+		newObj.setName(obj.getName());
+		newObj.setEmail(obj.getEmail());
+	}
+
 	// Foi implementado na classe Service, por conta de uma possível manipulação no Banco futuramente, a class Service é a unica que mantem uma dpendência com o banco
 	public User fromDTO(UserDTO objDTO) { // Instanciando um User a partir do DTO
 		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());

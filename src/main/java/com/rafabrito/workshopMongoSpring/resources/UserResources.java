@@ -51,4 +51,12 @@ public class UserResources {
 		service.delete(id);
 		return ResponseEntity.noContent().build(); // o NoContent retornará o código 204 para confirmar que foi deletado daquela requisição (do id)
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody UserDTO objDTO, @PathVariable String id){ // O Request é para q o endpoint aceite o objDTO
+		User obj = service.fromDTO(objDTO);
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build(); 
+	}
 }
