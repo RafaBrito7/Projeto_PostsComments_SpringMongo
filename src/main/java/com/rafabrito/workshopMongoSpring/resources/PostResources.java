@@ -1,5 +1,6 @@
 package com.rafabrito.workshopMongoSpring.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,18 @@ public class PostResources {
 	public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text){ // O request formatará a url no padrão http titlesearch?text=parametromsg
 		text = URL.decodeParam(text); // Para encontrar a formatação http do text, inpencionar elemento no chrome e pesquisar no console o encodeURIComponent("bom dia")
 		List<Post> list = service.findByTitle(text);
+		return ResponseEntity.ok().body(list);
+	}
+	
+	@RequestMapping(value = "/fullsearch", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> fullSearch(
+			@RequestParam(value = "text", defaultValue = "") String text,
+			@RequestParam(value = "minDate", defaultValue = "") String minDate,
+			@RequestParam(value = "maxDate", defaultValue = "") String maxDate){ // O request formatará a url no padrão http titlesearch?text=parametromsg
+		text = URL.decodeParam(text); // Para encontrar a formatação http do text, inpencionar elemento no chrome e pesquisar no console o encodeURIComponent("bom dia")
+		Date min = URL.convertDate(minDate, new Date(0L));
+		Date max = URL.convertDate(maxDate, new Date());
+		List<Post> list = service.fullSearch(text, min, max);
 		return ResponseEntity.ok().body(list);
 	}
 	
